@@ -1,0 +1,46 @@
+@startuml
+class InventoryManagementApplication{
+    +main()
+        launch()
+}
+
+class InventoryManagementApplicationController{
+    events handlers for buttons, tables, etc..
+}
+
+class InventoryList{
+    +observableList
+    +filteredList
+
+    +addItem(serialNumber, name, value)
+    +getFilteredList()
+    +getItemList()
+    +deleteItem(inventoryItem)
+    +clearItems()
+    +filterList()
+    +editItem(serialNumber, name, value, listIndex)
+}
+
+class InventoryItem{
+    -serialNumber
+    -name
+    -value
+    +setSerialNumber(serialNumber)
+    +getSerialNumber()
+    +setName(name)
+    +getName()
+    +setValue(value)
+    +getValue()
+}
+
+class Save{
+    +saveFile(File, ObservableList)
+    +loadFile(File, ObservableList)
+}
+
+InventoryManagementApplication <|-- InventoryManagementApplicationController
+InventoryManagementApplication <|-- InventoryItem
+InventoryManagementApplication <|-- InventoryList
+InventoryManagementApplication <|-- Save
+
+@enduml

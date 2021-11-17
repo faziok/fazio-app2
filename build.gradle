@@ -30,5 +30,5 @@ run {
 }
 
 application {
-    mainClass = "InventoryManagementApp.baseline.InventoryManagementApplication" //CHANGE TO MAIN CLASS PATH!
+    mainClass = "inventoryManagementApp.baseline.InventoryManagementApplication" //CHANGE TO MAIN CLASS PATH!
 }

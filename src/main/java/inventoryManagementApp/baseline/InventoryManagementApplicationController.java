@@ -27,16 +27,16 @@ public class InventoryManagementApplicationController implements Initializable {
     private TextField itemSearchTF;
 
     @FXML
-    private TableView<InventoryItem> itemsTableView;
+    private TableView<String> itemsTableView;
 
     @FXML
-    public TableColumn<InventoryItem, String> serialNumberCol;
+    public TableColumn<String, Integer> serialNumberCol;
 
     @FXML
-    public TableColumn<InventoryItem, String> nameCol;
+    public TableColumn<String, Integer> nameCol;
 
     @FXML
-    public TableColumn<InventoryItem, String> valueCol;
+    public TableColumn<String, Integer> valueCol;
 
     @FXML
     private Button addItemButton;
@@ -70,6 +70,8 @@ public class InventoryManagementApplicationController implements Initializable {
     //Initialize
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        itemsTableView.setPlaceholder(new Label("No inventory to display"));
+
         //Max chars for textField
         final int MAX_CHARS = 256;
 
