@@ -36,8 +36,8 @@ public class InventoryItem {
         return itemSerialNumber;
     }
 
-    public void setDescription(String itemName){
-        //set description
+    public void setItemName(String itemName) {
+        //set status
         this.itemName = itemName;
     }
 
@@ -46,7 +46,7 @@ public class InventoryItem {
         return itemName;
     }
 
-    public void setItemName(BigDecimal itemValue) {
+    public void setItemValue(BigDecimal itemValue) {
         //set status
         this.itemValue = itemValue;
     }

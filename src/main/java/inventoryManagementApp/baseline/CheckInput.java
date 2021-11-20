@@ -5,14 +5,7 @@ package inventoryManagementApp.baseline;
  *  Copyright 2021 Keven Fazio
  */
 
-import javafx.collections.ObservableList;
-import javafx.collections.ObservableListBase;
-
-import java.lang.reflect.Array;
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Collectors;
 
 public class CheckInput {
 
@@ -37,14 +30,19 @@ public class CheckInput {
         }
         //test passes
         return false;
-    }aqwsz2ezd33d
+    }
 
-    public boolean checkSerialNumberDuplicate(String itemSerialNumber, ObservableList<InventoryItem> itemList){
-        for (int i = 0; i < itemList.size(); i++){
-            if(itemList.equals(itemSerialNumber)){
+    public boolean checkSerialNumberDuplicate(String itemSerialNumber, InventoryList itemList){
+        //for the size of the InventoryList go through each item and
+            //check if the input serialnumber equals an existing one.
+        for (int i = 0; i < itemList.getInventoryList().size(); i++){
+            InventoryItem test = itemList.getInventoryList().get(i);
+            if (test.getItemSerialNumber().equals(itemSerialNumber)){
                 return true;
             }
         }
+
+        //test passes
         return false;
     }
 

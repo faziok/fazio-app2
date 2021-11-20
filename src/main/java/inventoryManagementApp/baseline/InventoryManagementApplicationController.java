@@ -125,7 +125,7 @@ public class InventoryManagementApplicationController implements Initializable {
         CheckInput check = new CheckInput();
 
         //if any of the tests fail, throw error for incorrect input and clear corresponding field
-        if(check.checkSerialNumber(itemSerialNumber)){
+        if(check.checkSerialNumber(itemSerialNumber) || check.checkSerialNumberDuplicate(itemSerialNumber, list)){
             //**************Throw error message*************
             itemSerialNumberTF.clear();
         } else if (check.checkName(itemName)){
@@ -200,7 +200,7 @@ public class InventoryManagementApplicationController implements Initializable {
 
         if(selectedIndex != null){
             //if any of the tests fail, throw error for incorrect input and clear corresponding field
-            if(check.checkSerialNumber(itemSerialNumber)){
+            if(check.checkSerialNumber(itemSerialNumber) || check.checkSerialNumberDuplicate(itemSerialNumber, list)){
                 //**************Throw error message*************
                 itemSerialNumberTF.clear();
             } else if (check.checkName(itemName)){

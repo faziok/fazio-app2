@@ -10,7 +10,6 @@ import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 
 import java.math.BigDecimal;
-import java.util.List;
 
 public class InventoryList {
     //initialize observable and filtered list
