@@ -13,6 +13,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -77,12 +78,17 @@ public class InventoryManagementApplicationController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         itemsTableView.setPlaceholder(new Label("No inventory to display"));
 
-        //Max chars for textField
+        //Max chars for name textField
         final int MAX_CHARS = 256;
-        //set text formatter for textField at max chars
+        //set text formatter for name textField at max chars
         itemNameTF.setTextFormatter(new TextFormatter<>(change ->
                 change.getControlNewText().length() <= MAX_CHARS ? change : null));
 
+        //Max chars for serial number textField
+        final int SN_MAX_CHARS = 13;
+        //set text formatter for serial number textField at max chars
+        itemSerialNumberTF.setTextFormatter(new TextFormatter<>(change ->
+                change.getControlNewText().length() <= SN_MAX_CHARS ? change : null));
 
         //set up tableView columns
         serialNumberCol.setCellValueFactory(new PropertyValueFactory<>("itemSerialNumber"));
@@ -125,17 +131,21 @@ public class InventoryManagementApplicationController implements Initializable {
         CheckInput check = new CheckInput();
 
         //if any of the tests fail, throw error for incorrect input and clear corresponding field
-        if(check.checkSerialNumber(itemSerialNumber) || check.checkSerialNumberDuplicate(itemSerialNumber, list)){
-            //**************Throw error message*************
-            itemSerialNumberTF.clear();
+        if(check.checkSerialNumber(itemSerialNumber)){
+            String snFormatError = "Correct Serial Number format: A-xxx-xxx-xxx\n(where 'A' is a letter and 'x' is a letter or number)";
+            check.showErrorPopup(snFormatError);
+        } else if (check.checkSerialNumberDuplicate(itemSerialNumber, list)){
+            String snDuplicateError = "Serial Number entered is already in use.";
+            check.showErrorPopup(snDuplicateError);
         } else if (check.checkName(itemName)){
-            //**************Throw error message*************
-            itemNameTF.clear();
+            String nameError = "Name may only be between 2-256 characters long.";
+            check.showErrorPopup(nameError);
         } else if (check.checkValue(itemValueTest)){
-            //**************Throw error message*************
-            itemValueTF.clear();
+            String valueError = "Value may only be a positive dollar amount.";
+            check.showErrorPopup(valueError);
         } else {
-            BigDecimal itemValue = new BigDecimal(itemValueTest);
+
+            BigDecimal itemValue = new BigDecimal(itemValueTest).setScale(2, RoundingMode.HALF_UP);
 
             list.addItems(itemSerialNumber, itemName, itemValue);
 
@@ -200,15 +210,18 @@ public class InventoryManagementApplicationController implements Initializable {
 
         if(selectedIndex != null){
             //if any of the tests fail, throw error for incorrect input and clear corresponding field
-            if(check.checkSerialNumber(itemSerialNumber) || check.checkSerialNumberDuplicate(itemSerialNumber, list)){
-                //**************Throw error message*************
-                itemSerialNumberTF.clear();
+            if(check.checkSerialNumber(itemSerialNumber)){
+                String snFormatError = "Correct format: A-xxx-xxx-xxx\n(where 'A' is a letter and 'x' is a letter or number)";
+                check.showErrorPopup(snFormatError);
+            } else if (check.checkSerialNumberDuplicate(itemSerialNumber, list)){
+                String snDuplicateError = "Serial Number is already in use.";
+                check.showErrorPopup(snDuplicateError);
             } else if (check.checkName(itemName)){
-                //**************Throw error message*************
-                itemNameTF.clear();
+                String nameError = "Name may only be between 2-256 characters long.";
+                check.showErrorPopup(nameError);
             } else if (check.checkValue(itemValueTest)){
-                //**************Throw error message*************
-                itemValueTF.clear();
+                String valueError = "Please enter a positive dollar amount.";
+                check.showErrorPopup(valueError);
             } else {
                 BigDecimal itemValue = new BigDecimal(itemValueTest);
 

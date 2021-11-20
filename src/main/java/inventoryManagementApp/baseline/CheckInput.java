@@ -5,6 +5,8 @@ package inventoryManagementApp.baseline;
  *  Copyright 2021 Keven Fazio
  */
 
+import javafx.scene.control.Alert;
+
 import java.math.BigDecimal;
 
 public class CheckInput {
@@ -65,5 +67,14 @@ public class CheckInput {
         return (db < 0);
 
         //return true if test passes.
+    }
+
+    public void showErrorPopup(String message) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Follow Directions!");
+        alert.setHeaderText("Invalid Input. Try Again.");
+        alert.setContentText(message);
+
+        alert.showAndWait();
     }
 }
