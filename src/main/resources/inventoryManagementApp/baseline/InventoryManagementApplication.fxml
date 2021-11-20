@@ -19,12 +19,12 @@
       <TextField fx:id="itemSerialNumberTF" alignment="TOP_LEFT" layoutX="133.0" layoutY="14.0" prefHeight="25.0" prefWidth="390.0" />
       <TextField fx:id="itemNameTF" alignment="TOP_LEFT" layoutX="132.0" layoutY="46.0" prefHeight="25.0" prefWidth="390.0" />
       <TextField fx:id="itemValueTF" alignment="TOP_LEFT" layoutX="132.0" layoutY="78.0" prefHeight="25.0" prefWidth="390.0" />
-      <TextField fx:id="itemSearchTF" alignment="TOP_LEFT" layoutX="132.0" layoutY="167.0" prefHeight="25.0" prefWidth="320.0" />
+      <TextField fx:id="itemSearchTF" alignment="TOP_LEFT" layoutX="132.0" layoutY="167.0" prefHeight="25.0" prefWidth="390.0" promptText="Enter keyword..." />
         <TableView fx:id="itemsTableView" editable="true" layoutX="12.0" layoutY="202.0" prefHeight="390.0" prefWidth="510.0" tableMenuButtonVisible="true">
             <columns>
                 <TableColumn fx:id="serialNumberCol" prefWidth="120.0" text="Serial Number" />
                 <TableColumn fx:id="nameCol" prefWidth="250.0" text="Name" />
-                <TableColumn fx:id="valueCol" maxWidth="1.7976931348623157E308" prefWidth="123.0" text="Value" />
+                <TableColumn fx:id="valueCol" maxWidth="1.7976931348623157E308" prefWidth="123.0" text="Value ($)" />
             </columns>
         </TableView>
         <Button fx:id="addItemButton" defaultButton="true" layoutX="455.0" layoutY="110.0" mnemonicParsing="false" onAction="#addItem" prefHeight="25.0" prefWidth="65.0" text="Add Item">
@@ -41,7 +41,6 @@
         <Button fx:id="saveButton" layoutX="387.0" layoutY="602.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="65.0" text="Save" />
         <Button fx:id="loadButton" layoutX="458.0" layoutY="602.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="65.0" text="Load" />
         <Button fx:id="clearListButton" layoutX="82.0" layoutY="602.0" mnemonicParsing="false" onAction="#clearList" prefHeight="25.0" prefWidth="65.0" text="Clear List" />
-      <Button fx:id="searchItemButton" layoutX="456.0" layoutY="167.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="65.0" text="Search" />
       <Separator layoutX="10.0" layoutY="149.0" prefWidth="510.0" />
     </children>
     <padding>

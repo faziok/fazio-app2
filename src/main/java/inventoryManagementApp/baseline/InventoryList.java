@@ -45,13 +45,22 @@ public class InventoryList {
         itemList.remove(item);
     }
 
-    /*
-    public void filterList(String val){
-        //set predicate for filter filter
-        //*****************************************************************************************
+    private boolean searchFindsItems(InventoryItem item, String searchText){
+        //search item from keyword
+        return (item.getItemSerialNumber().toLowerCase().contains(searchText.toLowerCase())) ||
+                (item.getItemName().toLowerCase().contains(searchText.toLowerCase()));
     }
-     */
 
+    public void filterItems (String searchText){
+        //set predicate for filter
+            //if searchText is null or empty return true
+            //else return items found items using searchFindItems
+        filteredItems.setPredicate(inventoryItem -> {
+            if (searchText == null || searchText.isBlank() || searchText.isEmpty()){
+                return true;
+            } else return searchFindsItems(inventoryItem, searchText);
+        });
+    }
 
     public void updateItem(String itemSerialNumber, String itemName, BigDecimal itemValue, int listIndex){
         //create an InventoryItem object and add it to list

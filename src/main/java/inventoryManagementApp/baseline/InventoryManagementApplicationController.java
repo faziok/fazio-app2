@@ -5,7 +5,6 @@ package inventoryManagementApp.baseline;
  *  Copyright 2021 Keven Fazio
  */
 
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -15,8 +14,6 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.ResourceBundle;
 
 public class InventoryManagementApplicationController implements Initializable {
@@ -36,13 +33,13 @@ public class InventoryManagementApplicationController implements Initializable {
     private TableView<InventoryItem> itemsTableView;
 
     @FXML
-    public TableColumn<String, Integer> serialNumberCol;
+    public TableColumn<InventoryItem, String> serialNumberCol;
 
     @FXML
-    public TableColumn<String, Integer> nameCol;
+    public TableColumn<InventoryItem, String> nameCol;
 
     @FXML
-    public TableColumn<String, Integer> valueCol;
+    public TableColumn<InventoryItem, BigDecimal> valueCol;
 
     @FXML
     private Button addItemButton;
@@ -52,9 +49,6 @@ public class InventoryManagementApplicationController implements Initializable {
 
     @FXML
     private Button clearButton;
-
-    @FXML
-    private Button searchItemButton;
 
     @FXML
     private Button deleteItemButton;
@@ -94,6 +88,14 @@ public class InventoryManagementApplicationController implements Initializable {
         serialNumberCol.setCellValueFactory(new PropertyValueFactory<>("itemSerialNumber"));
         nameCol.setCellValueFactory(new PropertyValueFactory<>("itemName"));
         valueCol.setCellValueFactory(new PropertyValueFactory<>("itemValue"));
+
+        //create listener for searchTF and send text to filterItems method
+        itemSearchTF.textProperty().addListener((observable, oldValue, newValue) ->
+                list.filterItems(newValue)
+        );
+
+        //set the tableview to show the filtered list of items
+        itemsTableView.setItems(list.getFilteredInventoryList());
 
         //ensure input fields are at default
         clearFields();
@@ -241,18 +243,6 @@ public class InventoryManagementApplicationController implements Initializable {
 
     /*
     @FXML
-    private void filterItems(ActionEvent e) {
-        //get value from comboBox
-        String val = filter.getValue();
-
-        //send value to filter method from to-do list
-        list.filterList(val);
-
-        //set the tableview to show the filtered list of items
-        itemsTableView.setItems(list.getFilteredTodoList());
-    }
-
-    @FXML
     private void saveList(ActionEvent e) {
         //set extension for txt and show saved dialog box
         fc.getExtensionFilters().add(extFilter);
@@ -320,5 +310,6 @@ public class InventoryManagementApplicationController implements Initializable {
         itemNameTF.clear();
         itemSerialNumberTF.clear();
         itemValueTF.clear();
+        itemSerialNumberTF.requestFocus();
     }
 }

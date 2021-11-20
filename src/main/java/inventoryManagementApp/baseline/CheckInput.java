@@ -70,11 +70,15 @@ public class CheckInput {
     }
 
     public void showErrorPopup(String message) {
+        //error alert default pop for invalid input
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle("Follow Directions!");
         alert.setHeaderText("Invalid Input. Try Again.");
+
+        //error message for specific error
         alert.setContentText(message);
 
+        //must exist to continue.
         alert.showAndWait();
     }
 }
