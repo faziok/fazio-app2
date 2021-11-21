@@ -26,19 +26,9 @@ public class InventoryItem {
         this.itemValue = itemValue;
     }
 
-    public void setItemSerialNumber(String itemSerialNumber){
-        //set description
-        this.itemSerialNumber = itemSerialNumber;
-    }
-
     public String getItemSerialNumber(){
         //get description
         return itemSerialNumber;
-    }
-
-    public void setItemName(String itemName) {
-        //set status
-        this.itemName = itemName;
     }
 
     public String getItemName(){
@@ -46,21 +36,29 @@ public class InventoryItem {
         return itemName;
     }
 
-    public void setItemValue(BigDecimal itemValue) {
-        //set status
-        this.itemValue = itemValue;
-    }
-
     public BigDecimal getItemValue(){
         //get item value
         return itemValue;
     }
 
+    public void setItemSerialNumber(String itemSerialNumber){
+        //set description
+        this.itemSerialNumber = itemSerialNumber;
+    }
+
+    public void setItemName(String itemName) {
+        //set status
+        this.itemName = itemName;
+    }
+
+    public void setItemValue(BigDecimal itemValue) {
+        //set status
+        this.itemValue = itemValue;
+    }
+
     //override data to a string
-    /*
     @Override
     public String toString(){
         return getItemSerialNumber() + " " + getItemName() + " " + getItemValue();
     }
-     */
 }

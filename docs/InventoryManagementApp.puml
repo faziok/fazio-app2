@@ -6,6 +6,7 @@ class InventoryManagementApplication{
 
 class InventoryManagementApplicationController{
     events handlers for buttons, tables, etc..
+    +clearItems()
 }
 
 class InventoryList{
@@ -33,14 +34,28 @@ class InventoryItem{
     +getValue()
 }
 
-class Save{
-    +saveFile(File, ObservableList)
-    +loadFile(File, ObservableList)
+class CheckInput{
+    +checkSerialNumber((serialNumber)
+    +checkSerialNumberDuplicate(serialNumber, list)
+    +checkName(name)
+    +checkValue(value)
+    +showErrorPopup(message)
+}
+
+class SaveAndLoad{
+    +saveTSVFile(File, ObservableList)
+    +saveHTMLFile(File, ObservableList)
+    +saveJSONFile(File, ObservableList)
+    +loadTSVFile(File, ObservableList)
+    +loadHTMLFile(File, ObservableList)
+    +loadJSONFile(File, ObservableList)
 }
 
 InventoryManagementApplication <|-- InventoryManagementApplicationController
 InventoryManagementApplication <|-- InventoryItem
 InventoryManagementApplication <|-- InventoryList
-InventoryManagementApplication <|-- Save
+InventoryManagementApplication <|-- CheckInput
+InventoryManagementApplication <|-- SaveAndLoad
+
 
 @enduml

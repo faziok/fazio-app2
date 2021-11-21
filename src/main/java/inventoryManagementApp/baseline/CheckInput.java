@@ -78,7 +78,7 @@ public class CheckInput {
         //error message for specific error
         alert.setContentText(message);
 
-        //must exist to continue.
+        //must exist to continue
         alert.showAndWait();
     }
 }

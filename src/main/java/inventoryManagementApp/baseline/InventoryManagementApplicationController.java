@@ -10,10 +10,14 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.FileChooser;
 
+import java.io.File;
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.net.URL;
+import java.util.Comparator;
 import java.util.ResourceBundle;
 
 public class InventoryManagementApplicationController implements Initializable {
@@ -95,7 +99,17 @@ public class InventoryManagementApplicationController implements Initializable {
         );
 
         //set the tableview to show the filtered list of items
-        itemsTableView.setItems(list.getFilteredInventoryList());
+        itemsTableView.setItems(list.getInventoryList());
+
+       //serialNumberCol.setComparator((a, b) -> a.compareTo(b) > 0) ? 1 : 0;
+
+        serialNumberCol.setComparator(columnSNComparator);
+
+        //set extension for txt and show saved dialog box
+        fc.getExtensionFilters().add(extFilterTSV);
+        fc.getExtensionFilters().add(extFilterHTML);
+        fc.getExtensionFilters().add(extFilterJSON);
+        fc.getExtensionFilters().add(extFilterALL);
 
         //ensure input fields are at default
         clearFields();
@@ -112,15 +126,16 @@ public class InventoryManagementApplicationController implements Initializable {
     //create variable for selected row
     InventoryItem selectedIndex = null;
 
-
-    //Save save = new Save();
-
-
-    /*
+    //save object
+    SaveAndLoad saveAndLoad = new SaveAndLoad();
     //create file chooser
     FileChooser fc = new FileChooser();
-    FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("TXT files (*.txt)", "*.txt");
-     */
+
+    //create extensions for file types
+    FileChooser.ExtensionFilter extFilterTSV = new FileChooser.ExtensionFilter("TSV files (*.tsv)", "*.tsv");
+    FileChooser.ExtensionFilter extFilterHTML = new FileChooser.ExtensionFilter("HTML files (*.html)", "*.html");
+    FileChooser.ExtensionFilter extFilterJSON = new FileChooser.ExtensionFilter("JSON files (*.json)", "*.json");
+    FileChooser.ExtensionFilter extFilterALL = new FileChooser.ExtensionFilter("ALL files (*.*)", "*.*");
 
     @FXML
     private void addItem(ActionEvent e) {
@@ -134,13 +149,14 @@ public class InventoryManagementApplicationController implements Initializable {
 
         //if any of the tests fail, throw error for incorrect input and clear corresponding field
         if(check.checkSerialNumber(itemSerialNumber)){
-            String snFormatError = "Correct Serial Number format: A-xxx-xxx-xxx\n(where 'A' is a letter and 'x' is a letter or number)";
+            String snFormatError = "Please enter Serial Number: A-xxx-xxx-xxx\n" +
+                    "(where 'A' is a letter and 'x' is a letter or number)";
             check.showErrorPopup(snFormatError);
         } else if (check.checkSerialNumberDuplicate(itemSerialNumber, list)){
             String snDuplicateError = "Serial Number entered is already in use.";
             check.showErrorPopup(snDuplicateError);
         } else if (check.checkName(itemName)){
-            String nameError = "Name may only be between 2-256 characters long.";
+            String nameError = "Please enter a name between 2-256 characters long.";
             check.showErrorPopup(nameError);
         } else if (check.checkValue(itemValueTest)){
             String valueError = "Value may only be a positive dollar amount.";
@@ -199,7 +215,6 @@ public class InventoryManagementApplicationController implements Initializable {
         }
     }
 
-
     @FXML
     private void update(ActionEvent e) {
         //get input from fields
@@ -213,13 +228,14 @@ public class InventoryManagementApplicationController implements Initializable {
         if(selectedIndex != null){
             //if any of the tests fail, throw error for incorrect input and clear corresponding field
             if(check.checkSerialNumber(itemSerialNumber)){
-                String snFormatError = "Correct format: A-xxx-xxx-xxx\n(where 'A' is a letter and 'x' is a letter or number)";
+                String snFormatError = "Please enter Serial Number: A-xxx-xxx-xxx\n" +
+                        "(where 'A' is a letter and 'x' is a letter or number)";
                 check.showErrorPopup(snFormatError);
             } else if (check.checkSerialNumberDuplicate(itemSerialNumber, list)){
                 String snDuplicateError = "Serial Number is already in use.";
                 check.showErrorPopup(snDuplicateError);
             } else if (check.checkName(itemName)){
-                String nameError = "Name may only be between 2-256 characters long.";
+                String nameError = "Please enter a name between 2-256 characters long.";
                 check.showErrorPopup(nameError);
             } else if (check.checkValue(itemValueTest)){
                 String valueError = "Please enter a positive dollar amount.";
@@ -241,68 +257,82 @@ public class InventoryManagementApplicationController implements Initializable {
         }
     }
 
-    /*
+
     @FXML
     private void saveList(ActionEvent e) {
-        //set extension for txt and show saved dialog box
-        fc.getExtensionFilters().add(extFilter);
+        //create file and open save dialog box
         File file = fc.showSaveDialog(null);
 
-        //if a file name and location is chosen, save the file
+        //variables for extension matching
+        String extTSV = "tsv";
+        String extHTML = "html";
+        String extJSON = "json";
+        String extension;
+        String fileName;
+        int index;
+
         if (file != null) {
-            save.saveTxtFile(file, list.getItemList());
+            fileName = file.toString();
+            //index of last "." in file name
+            index = fileName.lastIndexOf('.');
+            //if index > 0 get the substring following the "." which would be the file extension
+            if (index > 0) {
+                extension = fileName.substring(index + 1);
+
+                //if extension matches, save the file as that extension
+                if (extension.equals(extTSV)) {
+                    saveAndLoad.saveTSVFile(file, list.getInventoryList());
+                } else if (extension.equals(extHTML)) {
+                    saveAndLoad.saveHTMLFile(file, list.getInventoryList());
+                } else if (extension.equals(extJSON)) {
+                    saveAndLoad.saveJSONFile(file, list.getInventoryList());
+                }
+            }
         }
     }
+
 
     @FXML
     private void loadList(ActionEvent e) throws IOException {
-        //set extension for txt and show open dialog box
-        fc.getExtensionFilters().add(extFilter);
+        //create file and open load dialog box
         File file = fc.showOpenDialog(null);
 
-        String line;
+        //variables for extension matching
+        String extTSV = "tsv";
+        String extHTML = "html";
+        String extJSON = "json";
+        String extension = null;
+        String fileName;
+        int index = 0;
 
-        if (file != null) {
-            //clear current list
-            list.clearList();
+        if (file != null){
+            fileName = file.toString();
+            //index of last "." in file name
+            index = fileName.lastIndexOf('.');
+            //if index > 0 get the substring following the "." which would be the file extension
+            if(index > 0) {
+                extension = fileName.substring(index + 1);
 
-            //create scanner
-            BufferedReader br = new BufferedReader(new FileReader(file));
+                //clear current list
+                list.clearList();
 
-            try (br) {
-                while ((line = br.readLine()) != null) {
-                    //read in line of file and split
-                    String[] newDataArr = line.split(",");
-
-                    //instance variables
-                    String description = newDataArr[0];
-
-                    //set local date
-                    //if input from file is "" set to null
-                    //else set to input
-                    LocalDate date;
-                    if (newDataArr[1].equals("")) {
-                        date = null;
-                    } else {
-                        date = LocalDate.parse(newDataArr[1]);
-                    }
-
-                    //if input is 'Completed' set status to true
-                    //else false
-                    boolean status;
-                    status = newDataArr[2].equals(SHOW_COMPLETED);
-
-                    //add item to list
-                    list.addItems(description, date, status);
+                //if extension matches, load the file as that extension
+                if (extension.equals(extTSV)){
+                    //load
+                    saveAndLoad.loadTSVFile(file, list.getInventoryList());
+                } else if (extension.equals(extHTML)){
+                    //load
+                    saveAndLoad.loadHTMLFile(file, list.getInventoryList());
+                } else if (extension.equals(extJSON)){
+                    //load
+                    saveAndLoad.loadJSONFile(file, list.getInventoryList());
                 }
-            }
 
-            //update tableview
-            itemsTableView.setItems(list.getFilteredTodoList());
-            filter.setValue(SHOW_ALL);
+                //update tableview
+                itemsTableView.setItems(list.getInventoryList());
+            }
         }
     }
-     */
 
     //method to clear input fields when needed
     private void clearFields () {
@@ -312,4 +342,7 @@ public class InventoryManagementApplicationController implements Initializable {
         itemValueTF.clear();
         itemSerialNumberTF.requestFocus();
     }
+
+    Comparator<String> columnSNComparator =
+            Comparator.comparing(String::toLowerCase);
 }

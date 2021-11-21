@@ -24,7 +24,7 @@
             <columns>
                 <TableColumn fx:id="serialNumberCol" prefWidth="120.0" text="Serial Number" />
                 <TableColumn fx:id="nameCol" prefWidth="250.0" text="Name" />
-                <TableColumn fx:id="valueCol" maxWidth="1.7976931348623157E308" prefWidth="123.0" text="Value ($)" />
+                <TableColumn fx:id="valueCol" prefWidth="123.0" text="Value ($)" />
             </columns>
         </TableView>
         <Button fx:id="addItemButton" defaultButton="true" layoutX="455.0" layoutY="110.0" mnemonicParsing="false" onAction="#addItem" prefHeight="25.0" prefWidth="65.0" text="Add Item">
@@ -38,8 +38,8 @@
                 <Font size="9.65" />
             </font></Button>
         <Button fx:id="editItemButton" layoutX="154.0" layoutY="602.0" mnemonicParsing="false" onAction="#editItem" prefHeight="25.0" prefWidth="65.0" text="Edit Item" />
-        <Button fx:id="saveButton" layoutX="387.0" layoutY="602.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="65.0" text="Save" />
-        <Button fx:id="loadButton" layoutX="458.0" layoutY="602.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="65.0" text="Load" />
+        <Button fx:id="saveButton" layoutX="387.0" layoutY="602.0" mnemonicParsing="false" onAction="#saveList" prefHeight="25.0" prefWidth="65.0" text="Save" />
+        <Button fx:id="loadButton" layoutX="458.0" layoutY="602.0" mnemonicParsing="false" onAction="#loadList" prefHeight="25.0" prefWidth="65.0" text="Load" />
         <Button fx:id="clearListButton" layoutX="82.0" layoutY="602.0" mnemonicParsing="false" onAction="#clearList" prefHeight="25.0" prefWidth="65.0" text="Clear List" />
       <Separator layoutX="10.0" layoutY="149.0" prefWidth="510.0" />
     </children>

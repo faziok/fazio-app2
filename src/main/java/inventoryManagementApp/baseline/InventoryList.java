@@ -30,6 +30,13 @@ public class InventoryList {
         return itemList;
     }
 
+    /*
+    public SortedList<InventoryItem> getSortedList(){
+        //get filtered list
+        return sortedList;
+    }
+     */
+
     public ObservableList<InventoryItem> getFilteredInventoryList(){
         //get filtered items
         return filteredItems;
