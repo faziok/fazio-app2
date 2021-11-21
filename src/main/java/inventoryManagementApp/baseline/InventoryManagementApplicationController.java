@@ -77,9 +77,6 @@ public class InventoryManagementApplicationController implements Initializable {
         //override label in table view when no items are in the list
         itemsTableView.setPlaceholder(new Label("No inventory to display"));
 
-        //create a sorted list to bind to the tableview to allow sorting
-        final SortedList<InventoryItem> theSortedItems = new SortedList<>(list.getFilteredInventoryList());
-
         //bind sortedlist with tableview
         theSortedItems.comparatorProperty().bind(itemsTableView.comparatorProperty());
 
@@ -122,6 +119,9 @@ public class InventoryManagementApplicationController implements Initializable {
 
     //Observable list object
     InventoryList list = new InventoryList();
+
+    //create a sorted list to bind to the tableview to allow sorting
+    SortedList<InventoryItem> theSortedItems = new SortedList<>(list.getFilteredInventoryList());
 
     //create variable for selected index of the list
     int listIndex;
@@ -257,7 +257,7 @@ public class InventoryManagementApplicationController implements Initializable {
 
 
     @FXML
-    private void saveList(ActionEvent e) {
+    private void saveList(ActionEvent e) throws IOException {
         //create file and open save dialog box
         File file = fc.showSaveDialog(null);
 
@@ -279,11 +279,11 @@ public class InventoryManagementApplicationController implements Initializable {
 
                 //if extension matches, save the file as that extension
                 if (extension.equals(extTSV)) {
-                    saveAndLoad.saveTSVFile(file, list.getInventoryList());
+                    saveAndLoad.saveTSVFile(file, theSortedItems);
                 } else if (extension.equals(extHTML)) {
-                    saveAndLoad.saveHTMLFile(file, list.getInventoryList());
+                    saveAndLoad.saveHTMLFile(file, theSortedItems);
                 } else if (extension.equals(extJSON)) {
-                    saveAndLoad.saveJSONFile(file, list.getInventoryList());
+                    saveAndLoad.saveJSONFile(file, theSortedItems);
                 }
             }
         }
