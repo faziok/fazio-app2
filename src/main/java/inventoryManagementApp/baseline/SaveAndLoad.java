@@ -9,6 +9,7 @@ import javafx.collections.ObservableList;
 
 import java.io.*;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 
 public class SaveAndLoad {
     public void saveTSVFile (File file, ObservableList<InventoryItem> list){
@@ -70,7 +71,7 @@ public class SaveAndLoad {
                 //instance variables
                 String serialNumber = newDataArr[0];
                 String name = newDataArr [1];
-                BigDecimal value = new BigDecimal(newDataArr[2]);
+                BigDecimal value = new BigDecimal(newDataArr[2]).setScale(2, RoundingMode.HALF_UP);
 
                 //create a new item
                 InventoryItem item = new InventoryItem(serialNumber, name, value);

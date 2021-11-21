@@ -5,6 +5,7 @@ package inventoryManagementApp.baseline;
  *  Copyright 2021 Keven Fazio
  */
 
+import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -17,7 +18,6 @@ import java.io.IOException;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.net.URL;
-import java.util.Comparator;
 import java.util.ResourceBundle;
 
 public class InventoryManagementApplicationController implements Initializable {
@@ -74,7 +74,17 @@ public class InventoryManagementApplicationController implements Initializable {
     //Initialize
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        //override label in table view when no items are in the list
         itemsTableView.setPlaceholder(new Label("No inventory to display"));
+
+        //create a sorted list to bind to the tableview to allow sorting
+        final SortedList<InventoryItem> theSortedItems = new SortedList<>(list.getFilteredInventoryList());
+
+        //bind sortedlist with tableview
+        theSortedItems.comparatorProperty().bind(itemsTableView.comparatorProperty());
+
+        //set the tableview to show the filtered list of items
+        itemsTableView.setItems(theSortedItems);
 
         //Max chars for name textField
         final int MAX_CHARS = 256;
@@ -97,13 +107,6 @@ public class InventoryManagementApplicationController implements Initializable {
         itemSearchTF.textProperty().addListener((observable, oldValue, newValue) ->
                 list.filterItems(newValue)
         );
-
-        //set the tableview to show the filtered list of items
-        itemsTableView.setItems(list.getInventoryList());
-
-       //serialNumberCol.setComparator((a, b) -> a.compareTo(b) > 0) ? 1 : 0;
-
-        serialNumberCol.setComparator(columnSNComparator);
 
         //set extension for txt and show saved dialog box
         fc.getExtensionFilters().add(extFilterTSV);
@@ -137,6 +140,8 @@ public class InventoryManagementApplicationController implements Initializable {
     FileChooser.ExtensionFilter extFilterJSON = new FileChooser.ExtensionFilter("JSON files (*.json)", "*.json");
     FileChooser.ExtensionFilter extFilterALL = new FileChooser.ExtensionFilter("ALL files (*.*)", "*.*");
 
+    //---------------------------------------
+
     @FXML
     private void addItem(ActionEvent e) {
         //get input from fields
@@ -166,9 +171,6 @@ public class InventoryManagementApplicationController implements Initializable {
             BigDecimal itemValue = new BigDecimal(itemValueTest).setScale(2, RoundingMode.HALF_UP);
 
             list.addItems(itemSerialNumber, itemName, itemValue);
-
-            //send list data to tableview
-            itemsTableView.setItems(list.getFilteredInventoryList());
 
             //clear item input fields
             clearFields();
@@ -245,14 +247,10 @@ public class InventoryManagementApplicationController implements Initializable {
 
                 list.updateItem(itemSerialNumber, itemName, itemValue, listIndex);
 
-                //send list data to tableview
-                itemsTableView.setItems(list.getFilteredInventoryList());
-
                 //clear item input fields
                 clearFields();
             }
         } else {
-            //*******************Throw error message*********************
             clearFields();
         }
     }
@@ -301,9 +299,9 @@ public class InventoryManagementApplicationController implements Initializable {
         String extTSV = "tsv";
         String extHTML = "html";
         String extJSON = "json";
-        String extension = null;
+        String extension;
         String fileName;
-        int index = 0;
+        int index;
 
         if (file != null){
             fileName = file.toString();
@@ -327,9 +325,6 @@ public class InventoryManagementApplicationController implements Initializable {
                     //load
                     saveAndLoad.loadJSONFile(file, list.getInventoryList());
                 }
-
-                //update tableview
-                itemsTableView.setItems(list.getInventoryList());
             }
         }
     }
@@ -342,7 +337,4 @@ public class InventoryManagementApplicationController implements Initializable {
         itemValueTF.clear();
         itemSerialNumberTF.requestFocus();
     }
-
-    Comparator<String> columnSNComparator =
-            Comparator.comparing(String::toLowerCase);
 }

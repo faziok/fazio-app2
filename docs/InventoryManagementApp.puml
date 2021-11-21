@@ -14,12 +14,13 @@ class InventoryList{
     +filteredList
 
     +addItem(serialNumber, name, value)
+    +getInventoryList()
     +getFilteredList()
-    +getItemList()
-    +deleteItem(inventoryItem)
     +clearItems()
-    +filterList()
-    +editItem(serialNumber, name, value, listIndex)
+    +deleteItem(inventoryItem)
+    +searchFindItem(item, searchText)
+    +filterItems(searchText)
+    +updateItem(serialNumber, name, value, listIndex)
 }
 
 class InventoryItem{

@@ -8,6 +8,7 @@ package inventoryManagementApp.baseline;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 
 import java.math.BigDecimal;
 
@@ -15,7 +16,6 @@ public class InventoryList {
     //initialize observable and filtered list
     private final ObservableList<InventoryItem> itemList = FXCollections.observableArrayList();
     private final FilteredList<InventoryItem> filteredItems = new FilteredList<>(itemList, p -> true);
-
 
     public void addItems(String itemSerialNumber, String itemName, BigDecimal itemValue){
         //create TodoListItem object and add it to list
@@ -29,13 +29,6 @@ public class InventoryList {
         //get filtered list
         return itemList;
     }
-
-    /*
-    public SortedList<InventoryItem> getSortedList(){
-        //get filtered list
-        return sortedList;
-    }
-     */
 
     public ObservableList<InventoryItem> getFilteredInventoryList(){
         //get filtered items

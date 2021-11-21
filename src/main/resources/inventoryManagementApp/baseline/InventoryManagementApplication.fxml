@@ -20,7 +20,7 @@
       <TextField fx:id="itemNameTF" alignment="TOP_LEFT" layoutX="132.0" layoutY="46.0" prefHeight="25.0" prefWidth="390.0" />
       <TextField fx:id="itemValueTF" alignment="TOP_LEFT" layoutX="132.0" layoutY="78.0" prefHeight="25.0" prefWidth="390.0" />
       <TextField fx:id="itemSearchTF" alignment="TOP_LEFT" layoutX="132.0" layoutY="167.0" prefHeight="25.0" prefWidth="390.0" promptText="Enter keyword..." />
-        <TableView fx:id="itemsTableView" editable="true" layoutX="12.0" layoutY="202.0" prefHeight="390.0" prefWidth="510.0" tableMenuButtonVisible="true">
+        <TableView fx:id="itemsTableView" editable="true" layoutX="12.0" layoutY="202.0" prefHeight="390.0" prefWidth="510.0">
             <columns>
                 <TableColumn fx:id="serialNumberCol" prefWidth="120.0" text="Serial Number" />
                 <TableColumn fx:id="nameCol" prefWidth="250.0" text="Name" />
