@@ -11,6 +11,7 @@ import javafx.collections.ObservableList;
 import java.io.*;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -32,14 +33,28 @@ public class SaveAndLoad {
         }
     }
 
-    public void saveHTMLFile(File file, ObservableList<InventoryItem> list) {
+    public void saveHTMLFile(File file, ObservableList<InventoryItem> list) throws IOException {
+        StringBuilder html = new StringBuilder();
+
         //try the list and writes to file from file chooser
         try {
             PrintWriter pWriter = new PrintWriter(file);
-            //write the file for the entire list of existing items
+
+            html.append("<!DOCTYPE html>%n<head>%n<title> Inventory </title>" +
+                    "%n<meta name=\"author\" content=\"Keven Fazio\">%n</head>%n" + "<body>");
+
             for (InventoryItem s : list) {
-                pWriter.write(s.getItemSerialNumber() + "\t" + s.getItemName() + "\t" + s.getItemValue() + "\n");
+                html.append("<H1>HELLO, TO END OF THE WORLD!</H1>");
             }
+            //set string for html file
+            //String html = String.format("<!DOCTYPE html>%n<head>%n<title> %s </title>" +
+            //        "%n<meta name=\"author\" content=\"%s\">%n</head>%n" +
+            //        "<body><H1>HELLO, TO END OF THE WORLD!</H1></body>%n</html>", siteName, author );
+
+            //write the file for the entire list of existing items
+            //write to the html file
+            pWriter.write(String.valueOf(html));
+
             //close writer
             pWriter.close();
         } catch (IOException ioe) {
@@ -93,27 +108,20 @@ public class SaveAndLoad {
         }
     }
 
-    public void loadHTMLFile(File file, ObservableList<InventoryItem> list) throws FileNotFoundException {
-        //create BufferReader
-        BufferedReader br = new BufferedReader(new FileReader(file));
+    public void loadHTMLFile(File file, ObservableList<InventoryItem> list) throws IOException {
+        // Constructing the URL connection
+        // by defining the URL constructors
+        URL url = new URL(file.toString());
+
+        // Reading the HTML content from the .HTML File
+        BufferedReader br = new BufferedReader(
+                new InputStreamReader(url.openStream()));
 
         String line;
 
         try (br) {
             while ((line = br.readLine()) != null) {
-                //read in line of file and split
-                String[] newDataArr = line.split("\t");
-
-                //instance variables
-                String serialNumber = newDataArr[0];
-                String name = newDataArr[1];
-                BigDecimal value = new BigDecimal(newDataArr[2]);
-
-                //create a new item
-                InventoryItem item = new InventoryItem(serialNumber, name, value);
-
-                //add item to list
-                list.add(item);
+                System.out.println(line);
             }
         } catch (IOException e) {
             e.printStackTrace();
