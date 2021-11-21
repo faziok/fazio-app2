@@ -7,11 +7,13 @@ package inventoryManagementApp.baseline;
 
 import com.google.gson.*;
 import javafx.collections.ObservableList;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
 
 import java.io.*;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -40,19 +42,16 @@ public class SaveAndLoad {
         try {
             PrintWriter pWriter = new PrintWriter(file);
 
-            html.append("<!DOCTYPE html>%n<head>%n<title> Inventory </title>" +
-                    "%n<meta name=\"author\" content=\"Keven Fazio\">%n</head>%n" + "<body>");
+            html.append(String.format("<!DOCTYPE html>%n<head>%n<title> Inventory </title>" +
+                    "%n<meta name=\"author\" content=\"Keven Fazio\">%n</head>%n<body>%n"));
 
-            for (InventoryItem s : list) {
-                html.append("<H1>HELLO, TO END OF THE WORLD!</H1>");
+            for (int i = 0; i < list.size(); i++) {
+                html.append(String.format("<div id=\"mydiv%d\">itemSerialNumber=\"%s\" itemName=\"%s\" itemValue=\"%.02f\"</div>%n", i + 1,
+                        list.get(1).getItemSerialNumber(), list.get(i).getItemName(), list.get(i).getItemValue()));
             }
-            //set string for html file
-            //String html = String.format("<!DOCTYPE html>%n<head>%n<title> %s </title>" +
-            //        "%n<meta name=\"author\" content=\"%s\">%n</head>%n" +
-            //        "<body><H1>HELLO, TO END OF THE WORLD!</H1></body>%n</html>", siteName, author );
 
-            //write the file for the entire list of existing items
-            //write to the html file
+            html.append(String.format("</body>%n</html>"));
+
             pWriter.write(String.valueOf(html));
 
             //close writer
@@ -111,18 +110,25 @@ public class SaveAndLoad {
     public void loadHTMLFile(File file, ObservableList<InventoryItem> list) throws IOException {
         // Constructing the URL connection
         // by defining the URL constructors
-        URL url = new URL(file.toString());
+        //URL url = new URL(file.toString());
 
         // Reading the HTML content from the .HTML File
-        BufferedReader br = new BufferedReader(
-                new InputStreamReader(url.openStream()));
+        //BufferedReader br = new BufferedReader(
+        //        new InputStreamReader(url.openStream()));
 
-        String line;
+        //create BufferReader
+        BufferedReader br = new BufferedReader(new FileReader(file));
 
         try (br) {
-            while ((line = br.readLine()) != null) {
-                System.out.println(line);
+            Document doc = Jsoup.parse(new File(file.toString()), "utf-8");
+
+            while(doc.body().nextElementSibling() != null){
+                Element divTag = doc.getElementById("mydiv1");
+
+                System.out.println(divTag.text());
             }
+
+
         } catch (IOException e) {
             e.printStackTrace();
         }

@@ -57,10 +57,8 @@ public class InventoryItem {
     }
 
     //override data to a string
-    /*
     @Override
     public String toString(){
         return getItemSerialNumber() + " " + getItemName() + " " + getItemValue();
     }
-     */
 }
