@@ -7,7 +7,7 @@
  
  1) To add an item to your Inventory, simply type a Serial Number, Name, and Value into the designated text fields. Once the information has been added, click the 'Add Item' button. Your new item will then populate into the list below showing.
 
- *NOTES for input:
+ *NOTE for input:
     
     -The Serial Number must follow a format of A-xxx-xxx-xxx, where 'A' must be a letter, and 'x' must be a letter or number.
     -The Name must be between 2 and 256 characters long
