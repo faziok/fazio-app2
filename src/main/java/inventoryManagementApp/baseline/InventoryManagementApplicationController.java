@@ -213,7 +213,7 @@ public class InventoryManagementApplicationController implements Initializable {
             itemNameTF.setText(selectedIndex.getItemName());
 
             //Populate ValueTF
-            itemValueTF.setText(String.valueOf(selectedIndex.getItemValue()));
+            itemValueTF.setText(selectedIndex.getItemValue().replace("$", "").replace(",", ""));
         }
     }
 
@@ -233,9 +233,6 @@ public class InventoryManagementApplicationController implements Initializable {
                 String snFormatError = "Please enter Serial Number: A-xxx-xxx-xxx\n" +
                         "(where 'A' is a letter and 'x' is a letter or number)";
                 check.showErrorPopup(snFormatError);
-            } else if (check.checkSerialNumberDuplicate(itemSerialNumber, list)){
-                String snDuplicateError = "Serial Number is already in use.";
-                check.showErrorPopup(snDuplicateError);
             } else if (check.checkName(itemName)){
                 String nameError = "Please enter a name between 2-256 characters long.";
                 check.showErrorPopup(nameError);
