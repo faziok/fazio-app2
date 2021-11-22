@@ -12,7 +12,7 @@
     -The Serial Number must follow a format of A-xxx-xxx-xxx, where 'A' must be a letter, and 'x' must be a letter or number.
     -The Name must be between 2 and 256 characters long
     -The value must be a number and be equal or greater than 0.
-    *An error message will be thrown in the format is incorrect
+    *An error message will be thrown if the input format is incorrect
  
  *NOTE: Input fields will be set to default upon adding an item.*
  
