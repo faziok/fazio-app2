@@ -108,9 +108,24 @@ class SaveAndLoadTest {
     }
 
     @Test
-    void loadHTMLFile() {
+    void loadHTMLFile() throws IOException {
+        //create list
+        setUpTest5Items(appTest);
+
+        //create file name
+        File fileHTML = new File ("./data/index.html");
+
+        //load list to new InventoryList
+        saveAndLoad.loadHTMLFile(fileHTML, loadTest.getInventoryList());
+
+        //test appTest equals itemListTest after deletion
+        assertEquals(Arrays.toString(appTest.getFilteredInventoryList().toArray()),
+                Arrays.toString(loadTest.getInventoryList().toArray()));
+
+        loadTest.clearList();
+        appTest.clearList();
     }
-    
+
     @Test
     void loadJSONFile() throws IOException {
         //create list

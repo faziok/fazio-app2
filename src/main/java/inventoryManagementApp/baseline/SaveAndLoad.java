@@ -18,6 +18,7 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Iterator;
 
 public class SaveAndLoad {
     public void saveTSVFile(File file, ObservableList<InventoryItem> list) {
@@ -42,15 +43,26 @@ public class SaveAndLoad {
         try {
             PrintWriter pWriter = new PrintWriter(file);
 
-            html.append(String.format("<!DOCTYPE html>%n<head>%n<title> Inventory </title>" +
-                    "%n<meta name=\"author\" content=\"Keven Fazio\">%n</head>%n<body>%n"));
+            html.append(String.format("<!DOCTYPE html>%n" +
+                    "   <head>%n" +
+                    "       <title> Inventory </title>%n" +
+                    "       <meta name=\"author\" content=\"Keven Fazio\">%n" +
+                    "   </head>%n" +
+                    "       <body>%n" +
+                    "          <table>%n"));
 
-            for (int i = 0; i < list.size(); i++) {
-                html.append(String.format("<div id=\"mydiv%d\">itemSerialNumber=\"%s\" itemName=\"%s\" itemValue=\"%.02f\"</div>%n", i + 1,
-                        list.get(1).getItemSerialNumber(), list.get(i).getItemName(), list.get(i).getItemValue()));
+            for (InventoryItem inventoryItem : list) {
+                html.append(String.format("          <tr>%n" +
+                                "              <td>%s</td>%n" +
+                                "              <td>%s</td>%n" +
+                                "              <td>%.02f</td>%n" +
+                                "          </tr>%n",
+                        inventoryItem.getItemSerialNumber(), inventoryItem.getItemName(), inventoryItem.getItemValue()));
             }
 
-            html.append(String.format("</body>%n</html>"));
+            html.append(String.format("        </table>%n" +
+                    "      </body>%n" +
+                    "</html>"));
 
             pWriter.write(String.valueOf(html));
 
@@ -107,27 +119,27 @@ public class SaveAndLoad {
         }
     }
 
-    public void loadHTMLFile(File file, ObservableList<InventoryItem> list) throws IOException {
-        // Constructing the URL connection
-        // by defining the URL constructors
-        //URL url = new URL(file.toString());
+    public void loadHTMLFile(File file, ObservableList<InventoryItem> list) {
+        Document htmlDoc;
+        try {
+            htmlDoc = Jsoup.parse(new File(file.toString()), "ISO-8859-1");
+            Element table = htmlDoc.selectFirst("table");
 
-        // Reading the HTML content from the .HTML File
-        //BufferedReader br = new BufferedReader(
-        //        new InputStreamReader(url.openStream()));
+            assert table != null;
 
-        //create BufferReader
-        BufferedReader br = new BufferedReader(new FileReader(file));
+            for (Element element : table.select("tr")) {
+                Iterator<Element> data = element.select("td").iterator();
+                //instance variables
+                String serialNumber = data.next().text();
+                String name = data.next().text();
+                BigDecimal value = new BigDecimal(data.next().text()).setScale(2, RoundingMode.HALF_UP);
 
-        try (br) {
-            Document doc = Jsoup.parse(new File(file.toString()), "utf-8");
+                //create a new item
+                InventoryItem item = new InventoryItem(serialNumber, name, value);
 
-            while(doc.body().nextElementSibling() != null){
-                Element divTag = doc.getElementById("mydiv1");
-
-                System.out.println(divTag.text());
+                //add item to list
+                list.add(item);
             }
-
 
         } catch (IOException e) {
             e.printStackTrace();

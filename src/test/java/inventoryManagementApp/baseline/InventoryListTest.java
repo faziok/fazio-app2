@@ -144,9 +144,6 @@ class InventoryListTest {
         String nameTest = "ZName";
         BigDecimal bdTest = new BigDecimal(100);
 
-        //set selected item as if from tableview
-        InventoryItem selectedItem = appTest.getInventoryList().get(2);
-
         appTest.updateItem(snTest, nameTest, bdTest, 2);
 
         //get specific item and split to string array for testing
