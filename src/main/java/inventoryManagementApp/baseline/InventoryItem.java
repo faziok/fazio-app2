@@ -6,6 +6,7 @@ package inventoryManagementApp.baseline;
  */
 
 import java.math.BigDecimal;
+import java.text.NumberFormat;
 
 public class InventoryItem {
     private String itemSerialNumber;
@@ -36,9 +37,9 @@ public class InventoryItem {
         return itemName;
     }
 
-    public BigDecimal getItemValue(){
+    public String getItemValue(){
         //get item value
-        return itemValue;
+        return NumberFormat.getCurrencyInstance().format(itemValue);
     }
 
     public void setItemSerialNumber(String itemSerialNumber){
