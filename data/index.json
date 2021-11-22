@@ -1,0 +1,27 @@
+[
+  {
+    "itemSerialNumber": "A-123-abc-de1",
+    "itemName": "aName",
+    "itemValue": 21.00
+  },
+  {
+    "itemSerialNumber": "A-123-abc-de2",
+    "itemName": "aName",
+    "itemValue": 22.00
+  },
+  {
+    "itemSerialNumber": "A-123-abc-de3",
+    "itemName": "aName",
+    "itemValue": 23.00
+  },
+  {
+    "itemSerialNumber": "A-123-abc-de4",
+    "itemName": "aName",
+    "itemValue": 24.00
+  },
+  {
+    "itemSerialNumber": "A-123-abc-de5",
+    "itemName": "aName",
+    "itemValue": 25.00
+  }
+]
