@@ -35,7 +35,7 @@ public class SaveAndLoad {
         }
     }
 
-    public void saveHTMLFile(File file, ObservableList<InventoryItem> list) throws IOException {
+    public void saveHTMLFile(File file, ObservableList<InventoryItem> list) {
         StringBuilder html = new StringBuilder();
 
         //try the list and writes to file from file chooser
