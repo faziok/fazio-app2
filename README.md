@@ -3,9 +3,10 @@
 *  UCF COP3330 Fall 2021 Application Assignment 1 Solution
 *  Copyright 2021 Keven Fazio
 
- # TO-DO LIST APPLICATION USER GUIDE
+ # INVENTORY MANAGER APPLICATION USER GUIDE
  
  1) To add an item to your Inventory, simply type a Serial Number, Name, and Value into the designated text fields. Once the information has been added, click the 'Add Item' button. Your new item will then populate into the list below showing.
+
  *NOTES for input:
     -The Serial Number must follow a format of A-xxx-xxx-xxx, where 'A' must be a letter, and 'x' may be a letter or number only.
     -The Name must be between 2 and 256 characters long
