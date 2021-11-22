@@ -5,15 +5,15 @@
 
  # INVENTORY MANAGER APPLICATION USER GUIDE
  
- 1) To add an item to your Inventory, simply type a Serial Number, Name, and Value into the designated text fields. Once the information has been added, click the 'Add Item' button. Your new item will then populate into the list below showing.
+ 1) To add an item to your Inventory, simply type a Serial Number, Name, and Value into the designated text fields. Once the information has been added, click the 'Add Item' button. Your new item will then populate into the list below.
 
  *NOTE for input:
     
     -The Serial Number must follow a format of A-xxx-xxx-xxx, where 'A' must be a letter, and 'x' must be a letter or number.
     -The Name must be between 2 and 256 characters long
-    -The value must be a number and be equal or greater than 0.
-    *An error message will be thrown if the input format is incorrect
-    *Input fields will be set to default upon adding an item.
+    -The Value must be a number and be equal or greater than 0.
+    -An error message will be thrown if the input format is incorrect
+    -Input fields will be set to default upon adding an item.
  
  2) There is a 'Clear' button for your convienence. This will set the input fields to their default values if needed.
  
@@ -28,6 +28,8 @@
  5) To search your list by Serial Number or Name, simple start typing into the search field. The list will update automatically based off of your input.
  *Example: Typing 'a' will show only item will the letter 'a' (upper or lowercase) in the Serial Number and/or Name.
  
- 6) To save your Inventory list click the 'Save' button. A save dialog box will appear where you can choose your file location, file type (.tsv, .html, .json), and file name. Click save and your file will be written.
+ 6) To sort the list, click the header of the column you wish to sort by (Serial Number, Name, or Value). The first click will sort by ascending, the second click by descending, and the third will return to original input order. 
  
- 7) To load a new Inventory list from an existing file, click the 'Load' button. An open dialog box will appear where you can choose the file (.tsv, .html, .json ONLY). Click open and your list WILL REPLACE your current list with the newly loaded list. You may then view, edit, delete, etc. as normal. 
+ 7) To save your Inventory list click the 'Save' button. A save dialog box will appear where you can choose your file location, file type (.tsv, .html, .json), and file name. Click save and your file will be written.
+ 
+ 8) To load a new Inventory list from an existing file, click the 'Load' button. An open dialog box will appear where you can choose the file (.tsv, .html, .json ONLY). Click open and your list WILL REPLACE your current list with the newly loaded list. You may then view, edit, delete, etc. as normal. 
