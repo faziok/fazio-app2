@@ -13,7 +13,6 @@ import org.jsoup.nodes.Element;
 
 import java.io.*;
 import java.math.BigDecimal;
-import java.math.RoundingMode;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -55,7 +54,7 @@ public class SaveAndLoad {
                 html.append(String.format("          <tr>%n" +
                                 "              <td>%s</td>%n" +
                                 "              <td>%s</td>%n" +
-                                "              <td>%.02f</td>%n" +
+                                "              <td>%s</td>%n" +
                                 "          </tr>%n",
                         inventoryItem.getItemSerialNumber(), inventoryItem.getItemName(), inventoryItem.getItemValue()));
             }
@@ -106,7 +105,7 @@ public class SaveAndLoad {
                 //instance variables
                 String serialNumber = newDataArr[0];
                 String name = newDataArr[1];
-                BigDecimal value = new BigDecimal(newDataArr[2]).setScale(2, RoundingMode.HALF_UP);
+                BigDecimal value = new BigDecimal(newDataArr[2].replace("$", "").replace(",", ""));
 
                 //create a new item
                 InventoryItem item = new InventoryItem(serialNumber, name, value);
@@ -132,7 +131,7 @@ public class SaveAndLoad {
                 //instance variables
                 String serialNumber = data.next().text();
                 String name = data.next().text();
-                BigDecimal value = new BigDecimal(data.next().text()).setScale(2, RoundingMode.HALF_UP);
+                BigDecimal value = new BigDecimal(data.next().text().replace("$", "").replace(",", ""));
 
                 //create a new item
                 InventoryItem item = new InventoryItem(serialNumber, name, value);
@@ -159,7 +158,7 @@ public class SaveAndLoad {
                 //instance variables
                 String serialNumber = inventoryItem.getItemSerialNumber();
                 String name = inventoryItem.getItemName();
-                BigDecimal value = new BigDecimal(inventoryItem.getItemValue().toString()).setScale(2, RoundingMode.HALF_UP);
+                BigDecimal value = new BigDecimal(inventoryItem.getItemValue().replace("$", "").replace(",", ""));
 
                 //create a new item
                 InventoryItem theInventoryItem = new InventoryItem(serialNumber, name, value);
