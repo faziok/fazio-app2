@@ -49,7 +49,7 @@ public class CheckInput {
     }
 
     public boolean checkName(String itemName){
-        //Test 'Name' input is between 2-256 characters long. Return false if fails
+        //Test 'Name' input is between 2-256 characters long. Return true if out of bounds
         return itemName.length() < 2 || itemName.length() > 256;
     }
 
@@ -64,9 +64,8 @@ public class CheckInput {
         //parse to a double to check if greater or equal to 0.
         double db = Double.parseDouble(itemValueTest);
 
+        //return true if test fails.
         return (db < 0);
-
-        //return true if test passes.
     }
 
     public void showErrorPopup(String message) {

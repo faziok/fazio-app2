@@ -1,14 +1,16 @@
 package inventoryManagementApp.baseline;
 
+/*
+ *  UCF COP3330 Fall 2021 Application Assignment 2 Solution
+ *  Copyright 2021 Keven Fazio
+ */
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.collections.transformation.FilteredList;
-import org.junit.Assert;
 import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;
 import java.util.Arrays;
-import java.util.zip.ZipEntry;
 
 import static org.junit.jupiter.api.Assertions.*;
 
